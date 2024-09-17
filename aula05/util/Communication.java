@@ -8,8 +8,8 @@ public class Communication {
 
     public Communication(Socket socket) {
         try {
-            input = new ObjectInputStream(socket.getInputStream());
             output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
         } catch (Exception e) {
             System.out.println("Erro ao criar comunicação");
             System.out.println(e.getMessage());

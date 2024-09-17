@@ -2,33 +2,33 @@ import java.net.Socket;
 import java.util.HashMap;
 
 public class Attendant extends Thread {
-    private Socket client;
+    // private Socket client;
     private Communication communication;
 
     public Attendant(Socket socket) {
-        client = socket;
+        // client = socket;
         communication = new Communication(socket);
     }
 
     @Override
     public void run() {
-        Translate translateReceived = (Translate) communication.receive();
+        Translation received = (Translation) communication.receive();
 
-        String resp = translate(translateReceived);
+        String resp = translate(received);
 
-        Translate translateToSend;
+        Translation translationToSend;
         if(resp != null) {
-            translateToSend = 
-                new Translate(resp, Status.SUCCESS);
+            translationToSend = 
+                new Translation(resp, Status.SUCCESS);
         } else {
-            translateToSend = 
-                new Translate(resp, Status.NOT_FOUND);
+            translationToSend = 
+                new Translation(resp, Status.NOT_FOUND);
         }
 
-        communication.send(translateToSend);
+        communication.send(translationToSend);
     }
 
-    private String translate(Translate translate) {
+    private String translate(Translation translate) {
         HashMap<String, String> dictionaryIngPort = new HashMap<>();
 
         dictionaryIngPort.put("red", "vermelho");
