@@ -15,8 +15,24 @@ public class ProductService {
     @Autowired
     private ProductRepo repo;
 
-    public Product insert(Product product) {
-        return repo.save(product);
+    public Optional<Product> insert(Product product) {
+        if(product.getCod() > 0) {
+            return Optional.empty();
+        }
+        return Optional.of(repo.save(product));
+    }
+
+    public Optional<Product> update(Product product) {
+        if(product.getCod() <= 0) {
+            return Optional.empty();
+        }
+        Optional<Product> prodOptional = repo.findById(product.getCod());
+
+        if(prodOptional.isEmpty()) {
+            return Optional.empty();
+        }
+        
+        return Optional.of(repo.save(product));
     }
 
     public Optional<Product> findById(int cod) {

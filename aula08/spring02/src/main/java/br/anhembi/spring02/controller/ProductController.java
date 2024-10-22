@@ -3,10 +3,12 @@ package br.anhembi.spring02.controller;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,8 +27,24 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<Product> insert(@RequestBody Product product) {
-        Product newProduct = service.insert(product);
-        return ResponseEntity.ok(newProduct);
+        Optional<Product> optionalProduct = service.insert(product);
+
+        if(optionalProduct.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<Product>(optionalProduct.get(), 
+            HttpStatus.CREATED);
+    }
+
+    @PutMapping
+    public ResponseEntity<Product> update(@RequestBody Product product) {
+        Optional<Product> optionalProduct = service.update(product);
+
+        if(optionalProduct.isEmpty()) {
+            return ResponseEntity.badRequest().build();
+        }
+        return new ResponseEntity<Product>(optionalProduct.get(), 
+            HttpStatus.OK);
     }
 
     @GetMapping("/{id}")
