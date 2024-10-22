@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-Spring02Application<spring02>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "br.anhembi.spring02.Spring02Application",
+            "projectName": "spring02",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
