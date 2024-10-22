@@ -22,6 +22,19 @@ public class ProductService {
         return Optional.of(repo.save(product));
     }
 
+    public boolean delete(int cod) {
+        if(cod <= 0) {
+            return false;
+        }
+        Optional<Product> prodOptional = repo.findById(cod);
+
+        if(prodOptional.isEmpty()) {
+            return false;
+        }
+        repo.deleteById(cod);
+        return true;
+    }
+
     public Optional<Product> update(Product product) {
         if(product.getCod() <= 0) {
             return Optional.empty();
@@ -31,7 +44,7 @@ public class ProductService {
         if(prodOptional.isEmpty()) {
             return Optional.empty();
         }
-        
+
         return Optional.of(repo.save(product));
     }
 
