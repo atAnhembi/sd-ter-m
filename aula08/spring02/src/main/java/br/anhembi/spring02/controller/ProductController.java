@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+import br.anhembi.spring02.dto.ProductDTO;
 import br.anhembi.spring02.model.Product;
 import br.anhembi.spring02.service.ProductService;
+import jakarta.validation.Valid;
 
 @RestController
 @CrossOrigin("*")
@@ -29,8 +31,8 @@ public class ProductController {
     private ProductService service;
 
     @PostMapping
-    public ResponseEntity<Product> insert(@RequestBody Product product) {
-        Optional<Product> optionalProduct = service.insert(product);
+    public ResponseEntity<Product> insert(@RequestBody @Valid ProductDTO productDto) {
+        Optional<Product> optionalProduct = service.insert(productDto.toProduct());
 
         if(optionalProduct.isEmpty()) {
             return ResponseEntity.badRequest().build();
